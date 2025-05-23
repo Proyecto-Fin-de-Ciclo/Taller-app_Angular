@@ -1,0 +1,24 @@
+taller-app/
+├── src/
+│   ├── app/
+│   │   ├── core/                  ← Servicios, interceptores y configuraciones globales
+│   │   │   ├── services/
+│   │   │   │   └── keycloak.service.ts
+│   │   │   ├── interceptors/
+│   │   │   │   └── token.interceptor.ts
+│   │   │   └── guards/           ← (opcional) AuthGuard para rutas protegidas
+│   │   ├── shared/               ← Componentes reutilizables (botones, inputs, etc.)
+│   │   ├── features/             ← Módulos funcionales por dominio
+│   │   │   ├── auth/             ← Todo lo relacionado con autenticación
+│   │   │   │   ├── login/
+│   │   │   │   │   └── login.component.ts/html/css
+│   │   │   │   ├── register/
+│   │   │   │   │   └── register.component.ts/html/css
+│   │   │   │   └── auth.module.ts
+│   │   │   ├── dashboard/        ← Ejemplo de otro módulo (usuarios, citas, etc.)
+│   │   │   │   └── dashboard.component.ts/html/css
+│   │   ├── app-routing.module.ts
+│   │   ├── app.module.ts
+│   │   └── main.ts
+├── angular.json
+└── ...
