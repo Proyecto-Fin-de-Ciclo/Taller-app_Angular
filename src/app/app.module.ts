@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './core/interceptors/auth.interceptors';
+import { GestionCitasComponent } from './features/gestion-citas/gestion-citas.component';
+import { CompaniasComponent } from './features/companias/companias.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptors';
     AppRoutingModule,
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    GestionCitasComponent,
+    CompaniasComponent
   ],
   providers: [
     AuthService,

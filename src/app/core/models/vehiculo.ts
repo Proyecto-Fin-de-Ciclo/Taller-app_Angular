@@ -1,6 +1,6 @@
 // src/app/core/models/vehiculo.dto.ts
 import { UserDTO } from './user';
-import { CompaniaAseguradoraDTO } from './compania-aseguradora';
+import { CompaniaAseguradora } from './compania-aseguradora';
 
 export interface VehiculoDTO {
   id?: number;
@@ -10,5 +10,5 @@ export interface VehiculoDTO {
   color: string;
   numeroBastidor: string;
   propietarioId: UserDTO;
-  companiaAseguradoraId: CompaniaAseguradoraDTO;
+  companiaAseguradoraId: CompaniaAseguradora;
 }

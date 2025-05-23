@@ -1,0 +1,181 @@
+.companias-container {
+  max-width: 720px;
+  margin: 30px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
+  border-radius: 12px;
+  padding: 25px 30px;
+}
+
+.btn {
+  cursor: pointer;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-add {
+  background-color: #4caf50;
+  color: white;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 8px rgb(76 175 80 / 0.4);
+}
+
+.btn-add:hover {
+  background-color: #388e3c;
+  box-shadow: 0 6px 14px rgb(56 142 60 / 0.6);
+}
+
+.btn-toggle {
+  background: transparent;
+  font-weight: 700;
+  font-size: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+  border: none;
+  color: #4caf50;
+  transition: color 0.3s ease;
+}
+
+.btn-toggle:hover {
+  color: #388e3c;
+}
+
+.btn-edit, .btn-delete {
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  margin-left: 12px;
+  transition: color 0.3s ease;
+}
+
+.btn-edit {
+  color: #2196f3;
+}
+
+.btn-edit:hover {
+  color: #0b79d0;
+}
+
+.btn-delete {
+  color: #f44336;
+}
+
+.btn-delete:hover {
+  color: #c62828;
+}
+
+.compania-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+  transition: background-color 0.3s ease;
+}
+
+.compania-item:hover {
+  background-color: #f0fdf4;
+}
+
+.compania-header {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #333;
+  user-select: none;
+}
+
+.compania-details {
+  margin-top: 14px;
+  padding-left: 34px;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.compania-details p {
+  margin: 7px 0;
+}
+
+.compania-form label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #444;
+}
+
+.compania-form input[type="text"],
+.compania-form input[type="email"],
+.compania-form input[type="tel"] {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 6px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.compania-form input[type="text"]:focus,
+.compania-form input[type="email"]:focus,
+.compania-form input[type="tel"]:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 5px rgb(76 175 80 / 0.5);
+}
+
+.compania-form input[type="checkbox"] {
+  margin-left: 8px;
+  transform: scale(1.3);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.compania-form button {
+  margin-top: 14px;
+  margin-right: 12px;
+  font-weight: 700;
+  box-shadow: 0 3px 7px rgb(0 0 0 / 0.12);
+}
+
+.compania-form button[type="submit"] {
+  background-color: #2196f3;
+  color: white;
+  padding: 9px 22px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.compania-form button[type="submit"]:hover:not(:disabled) {
+  background-color: #0b79d0;
+  box-shadow: 0 6px 14px rgb(11 121 208 / 0.6);
+}
+
+.compania-form button[type="submit"]:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.compania-form button[type="button"] {
+  background-color: #757575;
+  color: white;
+  padding: 9px 22px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.compania-form button[type="button"]:hover {
+  background-color: #494949;
+}

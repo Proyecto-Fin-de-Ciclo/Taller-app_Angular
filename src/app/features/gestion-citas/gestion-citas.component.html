@@ -1,40 +1,38 @@
 <div class="calendario">
-  <!-- Selector de mes y año -->
   <div class="selector-fecha">
     <select [(ngModel)]="selectedMonth" (change)="onChangeFecha()">
-      <option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">
-        {{ m }}
-      </option>
+      <option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">{{ m }}</option>
     </select>
 
-    <input type="number" [(ngModel)]="selectedYear" (change)="onChangeFecha()" min="1900" max="2100" />
+    <input
+      type="number"
+      [(ngModel)]="selectedYear"
+      (change)="onChangeFecha()"
+      min="1900"
+      max="2100"
+    />
   </div>
 
-  <!-- Encabezados de días de la semana -->
   <div class="dias-semana">
     <div *ngFor="let dia of ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']" class="dia-semana">
       {{ dia }}
     </div>
   </div>
 
-  <!-- Cuadrícula del mes -->
   <div class="dias-mes">
     <ng-container *ngFor="let dia of diasDelMes">
       <div class="dia" [class.gris]="dia.esDeOtroMes">
         <div class="numero-dia">{{ dia.numero }}</div>
         <div class="citas">
-          <a
-            *ngFor="let cita of citasPorDia[dia.numero] || []"
-            href="#"
-            (click)="abrirDetalleCita(cita)"
+          <div
+            *ngFor="let cita of getCitasDelDia(dia.numero) | slice:0:6"
             class="cita-link"
+            style="margin-bottom: 4px;"
           >
-            {{ cita.user.nombre }} {{ cita.user.apellidos }}
-          </a>
+            {{ cita.user.nombre }} {{ cita.user.apellidos }} - {{ cita.fecha | date: 'HH:mm' }}
+          </div>
         </div>
       </div>
     </ng-container>
   </div>
 </div>
-
-

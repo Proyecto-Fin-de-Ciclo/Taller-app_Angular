@@ -1,5 +1,5 @@
 // src/app/core/models/compania-aseguradora.dto.ts
-export interface CompaniaAseguradoraDTO {
+export interface CompaniaAseguradora {
   id?: number;
   nombre: string;
   telefono: string;

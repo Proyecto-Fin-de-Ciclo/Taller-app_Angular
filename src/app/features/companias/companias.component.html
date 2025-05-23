@@ -1,0 +1,73 @@
+<div class="companias-container">
+  <button (click)="anadirCompania()" class="btn btn-add">Añadir Compañía</button>
+
+  <!-- Si estamos en modo añadir, mostramos el formulario vacío -->
+  <div *ngIf="editMode && !editingCompania" class="compania-form">
+    <form [formGroup]="companiaForm" (ngSubmit)="onSubmit()">
+      <label>
+        Nombre:
+        <input formControlName="nombre" />
+      </label>
+      <label>
+        Teléfono:
+        <input formControlName="telefono" />
+      </label>
+      <label>
+        Email:
+        <input formControlName="email" />
+      </label>
+      <label>
+        Concertado:
+        <input type="checkbox" formControlName="concertado" />
+      </label>
+      <button type="submit" [disabled]="companiaForm.invalid">Guardar</button>
+      <button type="button" (click)="resetForm()">Cancelar</button>
+    </form>
+  </div>
+
+  <div *ngFor="let compania of companias" class="compania-item">
+    <div class="compania-header">
+      <button (click)="toggleExpand(compania.id!)" class="btn-toggle">
+        {{ expandedIds.has(compania.id!) ? '▼' : '▶' }}
+      </button>
+      <span>{{ compania.nombre }}</span>
+      <button (click)="toggleEdit(compania)" title="Editar" class="btn-edit">
+        🔑
+      </button>
+      <button (click)="borrarCompania(compania.id)" class="btn-delete" title="Eliminar">
+        🗑️
+      </button>
+    </div>
+
+    <div *ngIf="expandedIds.has(compania.id!)" class="compania-details">
+      <form *ngIf="editingCompania?.id === compania.id && editMode" [formGroup]="companiaForm" (ngSubmit)="onSubmit()">
+        <label>
+          Nombre:
+          <input formControlName="nombre" />
+        </label>
+        <label>
+          Teléfono:
+          <input formControlName="telefono" />
+        </label>
+        <label>
+          Email:
+          <input formControlName="email" />
+        </label>
+        <label>
+          Concertado:
+          <input type="checkbox" formControlName="concertado" />
+        </label>
+
+        <button type="submit" [disabled]="companiaForm.invalid">Guardar</button>
+        <button type="button" (click)="resetForm()">Cancelar</button>
+      </form>
+
+      <div *ngIf="!(editingCompania?.id === compania.id && editMode)">
+        <p><strong>Teléfono:</strong> {{ compania.telefono }}</p>
+        <p><strong>Email:</strong> {{ compania.email }}</p>
+        <p><strong>Concertado:</strong> {{ compania.concertado ? 'Sí' : 'No' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
