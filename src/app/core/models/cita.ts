@@ -1,10 +1,10 @@
 // src/app/core/models/cita.dto.ts
-import { UserDTO } from './user';
-import { VehiculoDTO } from './vehiculo';
+import { User } from './user';
+import { Vehiculo } from './vehiculo';
 
 export interface Cita {
   id?: number;
-  user: UserDTO;
-  vehiculoCita: VehiculoDTO;
+  user: User;
+  vehiculoCita: Vehiculo;
   fecha: string;  // formato ISO string para fecha y hora
 }

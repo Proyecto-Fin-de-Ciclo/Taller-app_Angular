@@ -1,0 +1,107 @@
+<div class="contenedor-principal">
+  <button class="btn-anadir" (click)="abrirFormulario()">Añadir Usuario</button>
+
+  <!-- Buscador por DNI -->
+  <div class="buscador-dni">
+    <input
+      type="text"
+      [(ngModel)]="dniBusqueda"
+      placeholder="Buscar por DNI"
+      class="form-control"
+    />
+    <button (click)="buscarPorDni()" class="btn btn-primary">Buscar</button>
+    <button (click)="limpiarBusqueda()" class="btn btn-secondary">Limpiar</button>
+  </div>
+
+  <div class="lista-usuarios">
+    <div class="folio-usuario" *ngFor="let u of usuarios">
+      <div class="datos-usuario">
+        <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellidos }}</p>
+        <p><strong>DNI:</strong> {{ u.dni }}</p>
+        <p><strong>Teléfono:</strong> {{ u.telefono }}</p>
+        <p><strong>Email:</strong> {{ u.email }}</p>
+        <p><strong>Dirección:</strong> {{ u.direccion }}, {{ u.ciudad }}, {{ u.provincia }}, {{ u.cp }}, {{ u.pais }}</p>
+        <p><strong>Usuario App:</strong> {{ u.nombreUsuarioApp }}</p>
+        <div *ngIf="u.vehiculos && u.vehiculos.length > 0">
+        <h4>Vehículos:</h4>
+        <ul>
+          <li *ngFor="let v of u.vehiculos">
+            {{ v.marca }} {{ v.modelo }} - Matrícula: {{ v.matricula }} - Color: {{ v.color }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!u.vehiculos || u.vehiculos.length === 0">
+        <p><em>Sin vehículos asignados</em></p>
+      </div>
+    </div>
+
+      <div class="botones-folio">
+        <button class="btn-modificar" (click)="abrirFormulario(u)">Modificar</button>
+        <button class="btn-borrar" (click)="borrarUsuario(u.id)">Borrar</button>
+      </div>
+    </div>
+    <div *ngIf="usuarios.length === 0">
+      <p>No se encontraron usuarios con ese DNI.</p>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarFormulario" class="modal">
+    <div class="modal-content">
+      <h3>{{ usuarioSeleccionado.id ? 'Modificar Usuario' : 'Añadir Usuario' }}</h3>
+      <form (ngSubmit)="guardarUsuario()">
+        <label>
+          Nombre:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.nombre" name="nombre" required />
+        </label>
+        <label>
+          Apellidos:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.apellidos" name="apellidos" required />
+        </label>
+        <label>
+          DNI:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.dni" name="dni" maxlength="9" required />
+        </label>
+        <label>
+          Teléfono:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.telefono" name="telefono" required />
+        </label>
+        <label>
+          Email:
+          <input type="email" [(ngModel)]="usuarioSeleccionado.email" name="email" required />
+        </label>
+        <label>
+          Dirección:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.direccion" name="direccion" required />
+        </label>
+        <label>
+          Ciudad:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.ciudad" name="ciudad" required />
+        </label>
+        <label>
+          Provincia:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.provincia" name="provincia" required />
+        </label>
+        <label>
+          Código Postal:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.cp" name="cp" maxlength="5" required />
+        </label>
+        <label>
+          País:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.pais" name="pais" required />
+        </label>
+        <label>
+          Nombre de usuario app:
+          <input type="text" [(ngModel)]="usuarioSeleccionado.nombreUsuarioApp" name="nombreUsuarioApp" maxlength="15" required />
+        </label>
+        <label>
+          Contraseña:
+          <input type="password" [(ngModel)]="usuarioSeleccionado.password" name="password" maxlength="25" required />
+        </label>
+        <div class="botones-formulario">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

@@ -1,0 +1,253 @@
+/* Contenedor principal */
+.contenedor-principal {
+  max-width: 1800px;
+  margin: 30px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  padding: 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Botón añadir */
+.btn-anadir {
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 28px;
+  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+  transition: background 0.4s ease, box-shadow 0.3s ease;
+}
+
+.btn-anadir:hover {
+  background: linear-gradient(135deg, #218838 0%, #19692c 100%);
+  box-shadow: 0 8px 20px rgba(25, 104, 44, 0.5);
+}
+
+/* Lista trabajadores */
+.lista-trabajadores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: left;
+}
+
+/* Cada folio (tarjeta) */
+.folio-trabajador {
+  display: flex;
+  align-items: center;
+  width: 450px;
+  height: 200px;
+  background: linear-gradient(145deg, #f9fafb, #e7ebf0);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+  border-radius: 14px;
+  padding: 18px 22px;
+  border: 1px solid #d3d9e6;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.folio-trabajador:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+}
+
+/* Foto trabajador a la izquierda */
+.foto-trabajador {
+  width: 220px;
+  height: 220px;
+  border-radius: 14px;
+  object-fit: cover;
+  margin-right: 20px;
+  border: 2px solid #c3cbd9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: border-color 0.3s ease;
+}
+
+.foto-trabajador:hover {
+  border-color: #28a745;
+}
+
+/* Datos trabajador */
+.datos-trabajador {
+  flex-grow: 1;
+  color: #222;
+}
+
+.datos-trabajador p {
+  margin: 6px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+  letter-spacing: 0.01em;
+}
+
+/* Botones dentro del folio */
+.botones-folio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 18px;
+}
+
+.btn-modificar, .btn-borrar {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background-color 0.4s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+.btn-modificar {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.btn-modificar:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003f7f 100%);
+  box-shadow: 0 6px 14px rgba(0,86,179,0.5);
+}
+
+.btn-borrar {
+  background: linear-gradient(135deg, #dc3545 0%, #a71d2a 100%);
+}
+
+.btn-borrar:hover {
+  background: linear-gradient(135deg, #a71d2a 0%, #7f121d 100%);
+  box-shadow: 0 6px 14px rgba(167,29,42,0.5);
+}
+
+/* Modal fondo */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30,30,30,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff;
+  padding: 30px 36px;
+  border-radius: 18px;
+  width: 420px;
+  box-shadow: 0 12px 38px rgba(0,0,0,0.18);
+  transition: transform 0.3s ease;
+}
+
+.modal-content:hover {
+  transform: translateY(-4px);
+}
+
+/* Título del modal */
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* Formulario */
+form label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 1rem;
+  color: #444;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+form input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1.05rem;
+  border: 1.8px solid #bbb;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0,123,255,0.3);
+  outline: none;
+}
+
+/* Botones formulario */
+.botones-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.botones-formulario button {
+  padding: 10px 20px;
+  font-size: 1.05rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: background-color 0.4s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.botones-formulario button[type="submit"] {
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  color: white;
+}
+
+.botones-formulario button[type="submit"]:hover {
+  background: linear-gradient(135deg, #218838 0%, #19692c 100%);
+  box-shadow: 0 6px 16px rgba(33,136,56,0.5);
+}
+
+.botones-formulario button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.botones-formulario button[type="button"]:hover {
+  background-color: #5a6268;
+  box-shadow: 0 6px 14px rgba(90,98,104,0.5);
+}
+
+/* Foto preview */
+.foto-preview {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  display: block;
+  margin-top: 14px;
+  border-radius: 10px;
+  border: 1.5px solid #c3cbd9;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.foto-preview:hover {
+  box-shadow: 0 6px 18px rgba(40,167,69,0.4);
+}
+

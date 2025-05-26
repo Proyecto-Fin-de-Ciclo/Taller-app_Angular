@@ -1,6 +1,8 @@
 // src/app/core/models/user.dto.ts
-export interface UserDTO {
-  id?: number;
+import { Vehiculo } from './vehiculo';
+
+export interface User {
+  id?: number;                 // Opcional porque al crear no existe aún
   nombre: string;
   apellidos: string;
   dni: string;
@@ -12,5 +14,7 @@ export interface UserDTO {
   cp: string;
   pais: string;
   nombreUsuarioApp: string;
-  password?: string;
+  password: string;
+  vehiculos: Vehiculo[];
 }
+

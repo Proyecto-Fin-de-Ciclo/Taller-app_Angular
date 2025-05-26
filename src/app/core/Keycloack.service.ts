@@ -17,13 +17,15 @@ export class KeycloakService {
   }
 
   init(): Promise<boolean> {
-    return this.keycloak.init({
-      onLoad: 'login-required',
-      checkLoginIframe: false
-    }).then(authenticated => {
-      return authenticated;
-    });
-  }
+  return this.keycloak.init({
+    onLoad: 'login-required',
+    checkLoginIframe: false,
+    redirectUri: window.location.origin + '/home'
+  }).then(authenticated => {
+    return authenticated;
+  });
+}
+
 
   getToken(): string | undefined {
     return this.keycloak.token;

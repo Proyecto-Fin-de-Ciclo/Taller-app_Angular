@@ -1,0 +1,168 @@
+<!-- Botón para abrir el formulario de nueva reparación -->
+
+
+<!-- Modal formulario para añadir/editar reparación -->
+<div *ngIf="mostrarFormulario" class="modal">
+  <div class="modal-content">
+    <h3>{{ reparacionSeleccionada.id ? 'Modificar Reparación' : 'Añadir Reparación' }}</h3>
+    <form (ngSubmit)="guardarReparacion()">
+      <label>
+        Descripción:
+        <input
+          type="text"
+          [(ngModel)]="reparacionSeleccionada.descripcion"
+          name="descripcion"
+          required
+          minlength="5"
+        />
+      </label>
+
+      <label>
+  Trabajador asignado:
+  <select [(ngModel)]="reparacionSeleccionada.trabajador" name="trabajador" required>
+    <option [ngValue]>Seleccione un trabajador</option>
+    <option *ngFor="let t of trabajadores" [ngValue]="t">
+      {{ t.nombreCompleto}}
+      {{this.trabajadorAnadido==t}}
+    </option>
+  </select>
+</label>
+
+<label>
+  Usuario cliente:
+  <select [(ngModel)]="reparacionSeleccionada.user" name="userId" required>
+    <option [ngValue]>Seleccione un usuario</option>
+    <option *ngFor="let u of usuarios" [ngValue]="u">
+      {{ u.nombre }} {{ u.apellidos }}
+      {{this.usuarioAnadido==u}}
+    </option>
+  </select>
+</label>
+
+      <label>
+        Fecha y hora inicio:
+        <input
+          type="datetime-local"
+          [(ngModel)]="reparacionSeleccionada.horaInicio"
+          name="horaInicio"
+          required
+        />
+      </label>
+
+      <label>
+        Fecha y hora fin (opcional):
+        <input
+          type="datetime-local"
+          [(ngModel)]="reparacionSeleccionada.horaFin"
+          name="horaFin"
+        />
+      </label>
+
+      <label>
+        Estado:
+        <select [(ngModel)]="reparacionSeleccionada.estado" name="estado" required>
+          <option value="PENDIENTE">PENDIENTE</option>
+          <option value="EN_PROCESO">EN_PROCESO</option>
+          <option value="EN_CABINA">EN_CABINA</option>
+          <option value="FINALIZADA">FINALIZADA</option>
+          <option value="CANCELADA">CANCELADA</option>
+        </select>
+      </label>
+
+      <div class="botones-formulario">
+        <button type="submit">{{ reparacionSeleccionada.id ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Filtros -->
+<div class="filtros-container">
+  <label for="clienteId">Filtrar por Cliente (ID):</label>
+  <input
+    type="text"
+    id="clienteId"
+    [(ngModel)]="clienteSeleccionadoId"
+    placeholder="Introduce ID cliente"
+  />
+  <button (click)="filtrarPorCliente()">Buscar Cliente</button>
+
+  <label for="fechaInicio">Fecha Inicio:</label>
+  <input
+    type="date"
+    id="fechaInicio"
+    [(ngModel)]="fechaInicio"
+  />
+
+  <label for="fechaFin">Fecha Fin:</label>
+  <input
+    type="date"
+    id="fechaFin"
+    [(ngModel)]="fechaFin"
+  />
+
+  <button (click)="aplicarFiltroFecha()">Filtrar por Fecha</button>
+  <button (click)="cargarTodasLasReparaciones()">Limpiar Filtros</button>
+  <button (click)="abrirFormularioOrden()">Nueva Orden de Trabajo</button>
+
+</div>
+
+<!-- Listado de reparaciones -->
+<div class="reparaciones-container">
+  <div *ngFor="let reparacion of reparaciones" class="reparacion-card">
+    <h3>{{ reparacion.descripcion }}</h3>
+    <p><strong>Cliente:</strong> {{ reparacion.user.nombre }} {{ reparacion.user.apellidos }}</p>
+    <p><strong>Teléfono:</strong> {{ reparacion.user.telefono || 'No disponible' }}</p>
+    <p><strong>Trabajador:</strong> {{ reparacion.trabajador?.nombreCompleto || 'Sin asignar' }}</p>
+    <p><strong>Inicio:</strong> {{ formatFecha(reparacion.horaInicio) }}</p>
+    <p><strong>Fin:</strong> {{ reparacion.horaFin ? formatFecha(reparacion.horaFin) : 'En curso' }}</p>
+    <p><strong>Estado:</strong> <span [ngClass]="reparacion.estado.toLowerCase()">{{ reparacion.estado }}</span></p>
+    <div>
+      <button
+        (click)="actualizarEstado(reparacion)"
+        [disabled]="reparacion.estado === 'FINALIZADA' || reparacion.estado === 'CANCELADA'">
+        Avanzar Estado
+      </button>
+      <button (click)="limpiarEstado(reparacion)" style="margin: 10px;">Reiniciar</button>
+      <button (click)="abrirFormulario(reparacion)">Editar</button>
+    </div>
+
+
+
+
+  </div>
+  <button class="reparacion-card" (click)="abrirFormulario()">Nueva Reparación</button>
+</div>
+<div *ngIf="mostrarFormularioOrden" class="modal">
+  <div class="modal-content">
+    <h3>Añadir Orden de Trabajo</h3>
+    <form (ngSubmit)="enviarOrdenDeTrabajo()">
+
+      <label>
+        Reparación asociada:
+        <select [(ngModel)]="reparacionSeleccionadaParaOrden" name="reparacionId" required>
+          <option [ngValue]="null">Selecciona una reparación</option>
+          <option *ngFor="let rep of reparaciones" [ngValue]="rep">
+            {{ rep.descripcion }} (ID: {{ rep.id }})
+          </option>
+        </select>
+      </label>
+
+      <label>
+        Descripción:
+        <input type="text" [(ngModel)]="descripcionOrden" name="descripcionOrden" required />
+      </label>
+
+      <label>
+        Matrícula del vehículo:
+        <input type="text" [(ngModel)]="matriculaOrden" name="matriculaOrden" required />
+      </label>
+
+      <button type="submit">Enviar</button>
+      <button type="button" (click)="cerrarFormularioOrden()">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+

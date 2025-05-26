@@ -1,0 +1,93 @@
+<div class="contenedor-principal">
+
+  <!-- Buscador por Matrícula -->
+  <div class="buscador-matricula">
+    <input
+      type="text"
+      [(ngModel)]="matriculaBusqueda"
+      placeholder="Buscar por Matrícula"
+      class="form-control"
+    />
+    <button (click)="buscarPorMatricula()" class="btn btn-primary">Buscar</button>
+    <button (click)="limpiarBusqueda()" class="btn btn-secondary">Limpiar</button>
+  </div>
+
+  <!-- Botón Añadir -->
+  <button class="btn-anadir" (click)="abrirFormulario()">Añadir Vehículo</button>
+
+  <!-- Lista de Vehículos en Cards -->
+  <div class="lista-vehiculos">
+    <div class="card-vehiculo" *ngFor="let v of vehiculos">
+      <div class="contenido-card">
+        <p><strong>Marca:</strong> {{ v.marca }}</p>
+        <p><strong>Modelo:</strong> {{ v.modelo }}</p>
+        <p><strong>Matrícula:</strong> {{ v.matricula }}</p>
+        <p><strong>Color:</strong> {{ v.color }}</p>
+        <p><strong>Propietario:</strong> {{ v.propietario.nombre }} {{ v.propietario.apellidos }}</p>
+        <p><strong>Compañía Aseguradora:</strong> {{ v.companiaAseguradora.nombre }}</p>
+      </div>
+      <div class="botones-card">
+        <button class="btn-modificar" (click)="abrirFormulario(v)">Modificar</button>
+        <button class="btn-borrar" (click)="borrarVehiculo(v.id)">Borrar</button>
+      </div>
+    </div>
+
+    <div *ngIf="vehiculos.length === 0">
+      <p>No se encontraron vehículos con esa matrícula.</p>
+    </div>
+  </div>
+
+  <!-- Modal Formulario Añadir/Modificar Vehículo -->
+  <div *ngIf="mostrarFormulario" class="modal">
+    <div class="modal-content">
+      <h3>{{ vehiculoSeleccionado.id ? 'Modificar Vehículo' : 'Añadir Vehículo' }}</h3>
+      <form (ngSubmit)="guardarVehiculo()">
+        <label>
+          Marca:
+          <input type="text" [(ngModel)]="vehiculoSeleccionado.marca" name="marca" maxlength="15" required />
+        </label>
+
+        <label>
+          Modelo:
+          <input type="text" [(ngModel)]="vehiculoSeleccionado.modelo" name="modelo" maxlength="15" required />
+        </label>
+
+        <label>
+          Matrícula:
+          <input type="text" [(ngModel)]="vehiculoSeleccionado.matricula" name="matricula" maxlength="8" required />
+        </label>
+
+        <label>
+          Color:
+          <input type="text" [(ngModel)]="vehiculoSeleccionado.color" name="color" maxlength="15" required />
+        </label>
+
+        <label>
+          Número de Bastidor:
+          <input type="text" [(ngModel)]="vehiculoSeleccionado.numeroBastidor" name="numeroBastidor" maxlength="17" required />
+        </label>
+
+        <label>
+          Propietario:
+          <select [(ngModel)]="vehiculoSeleccionado.propietario" name="propietario" required>
+            <option *ngFor="let u of usuarios" [ngValue]="u">{{ u.nombre }} {{ u.apellidos }}</option>
+          </select>
+        </label>
+
+        <label>
+          Compañía Aseguradora:
+          <select [(ngModel)]="vehiculoSeleccionado.companiaAseguradora" name="companiaAseguradora" required>
+            <option *ngFor="let c of companias" [ngValue]="c">{{ c.nombre }}</option>
+          </select>
+        </label>
+
+        <div class="botones-formulario">
+          <button type="submit" class="btn-guardar">Guardar</button>
+          <button type="button" class="btn-cancelar" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+

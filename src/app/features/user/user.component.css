@@ -1,0 +1,317 @@
+/* Contenedor principal */
+/* Contenedor principal debe tener posición relativa para que el botón se posicione respecto a él */
+.contenedor-principal {
+  position: relative;
+  max-width: 1700px;
+  margin: 30px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  padding: 24px 32px 60px 32px; /* Deja espacio abajo para el botón */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Botón añadir pequeño y posicionado abajo derecha */
+.btn-anadir {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px; /* Más pequeño */
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem; /* Más pequeño */
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+  transition: background 0.4s ease, box-shadow 0.3s ease;
+  margin-bottom: 0; /* Quitar margen */
+  z-index: 10; /* Para que esté encima */
+}
+
+.btn-anadir:hover {
+  background: linear-gradient(135deg, #218838 0%, #19692c 100%);
+  box-shadow: 0 6px 14px rgba(25, 104, 44, 0.5);
+}
+
+
+/* Lista de usuarios */
+.lista-usuarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: left;
+}
+
+/* Cada folio (card) de usuario */
+.folio-usuario {
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  background: linear-gradient(145deg, #f9fafb, #e7ebf0);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+  border-radius: 14px;
+  padding: 18px 22px;
+  border: 1px solid #d3d9e6;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.folio-usuario:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+}
+
+.datos-usuario p {
+  margin: 6px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+  letter-spacing: 0.01em;
+}
+
+/* Botones dentro del folio */
+.botones-folio {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Botones modificar/borrar pequeños */
+.btn-modificar, .btn-borrar {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background-color 0.4s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  white-space: nowrap;
+}
+
+.btn-modificar {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.btn-modificar:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003f7f 100%);
+  box-shadow: 0 6px 14px rgba(0,86,179,0.5);
+}
+
+.btn-borrar {
+  background: linear-gradient(135deg, #dc3545 0%, #a71d2a 100%);
+}
+
+.btn-borrar:hover {
+  background: linear-gradient(135deg, #a71d2a 0%, #7f121d 100%);
+  box-shadow: 0 6px 14px rgba(167,29,42,0.5);
+}
+
+/* Modal fondo */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30,30,30,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Contenido del modal */
+.modal-content {
+  width: 750px;
+  padding: 24px 32px;
+  border-radius: 14px;
+  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.18);
+  background-color: #fff;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.modal-content:hover {
+  transform: translateY(-4px);
+}
+
+/* Título del modal */
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* Formulario */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Inputs más grandes */
+form input[type="text"],
+form input[type="file"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"] {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1.15rem;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Imagen y preview */
+form label:nth-child(3),
+.foto-preview {
+  grid-column: span 2;
+}
+
+.foto-preview {
+  max-height: 150px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1.5px solid #c3cbd9;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  object-fit: contain;
+  transition: box-shadow 0.3s ease;
+}
+
+.foto-preview:hover {
+  box-shadow: 0 6px 18px rgba(40,167,69,0.4);
+}
+
+/* Botones del formulario */
+.botones-formulario {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.botones-formulario button {
+  padding: 10px 20px;
+  font-size: 1.05rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: background-color 0.4s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.botones-formulario button[type="submit"] {
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  color: white;
+}
+
+.botones-formulario button[type="submit"]:hover {
+  background: linear-gradient(135deg, #218838 0%, #19692c 100%);
+  box-shadow: 0 6px 16px rgba(33,136,56,0.5);
+}
+
+.botones-formulario button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.botones-formulario button[type="button"]:hover {
+  background-color: #5a6268;
+  box-shadow: 0 6px 14px rgba(90,98,104,0.5);
+}
+/* Contenedor del buscador por DNI */
+.buscador-dni {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+/* Campo de entrada de DNI */
+.buscador-dni input[type="text"] {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  width: 260px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.buscador-dni input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Botón Buscar */
+.buscador-dni .btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.buscador-dni .btn-primary:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003f7f 100%);
+  box-shadow: 0 6px 14px rgba(0,86,179,0.4);
+}
+
+/* Botón Limpiar */
+.buscador-dni .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.buscador-dni .btn-secondary:hover {
+  background-color: #5a6268;
+  box-shadow: 0 6px 14px rgba(90, 98, 104, 0.5);
+}
+

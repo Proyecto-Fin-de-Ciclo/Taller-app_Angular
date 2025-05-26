@@ -1,1 +1,91 @@
-<p>piezas works!</p>
+<div class="piezas-container">
+  <button (click)="anadirPieza()" class="btn btn-add">Añadir Pieza</button>
+
+  <!-- Formulario para añadir pieza nueva -->
+  <div *ngIf="editMode && !editingPieza" class="pieza-form">
+    <form [formGroup]="piezaForm" (ngSubmit)="onSubmit()">
+      <label>
+        Nombre:
+        <input formControlName="nombre" />
+      </label>
+      <label>
+        Descripción:
+        <input formControlName="descripcion" />
+      </label>
+      <label>
+        Precio:
+        <input type="number" formControlName="precio" />
+      </label>
+      <label>
+        Stock:
+        <input type="number" formControlName="stock" />
+      </label>
+      <label>
+        Proveedor:
+        <input formControlName="proveedor" />
+      </label>
+      <label>
+        Referencia:
+        <input formControlName="referencia" />
+      </label>
+      <button type="submit" [disabled]="piezaForm.invalid">Guardar</button>
+      <button type="button" (click)="resetForm()">Cancelar</button>
+    </form>
+  </div>
+
+  <div *ngFor="let pieza of piezas" class="pieza-item">
+    <div class="pieza-header">
+      <button (click)="toggleExpand(pieza.id!)" class="btn-toggle">
+        {{ expandedIds.has(pieza.id!) ? '▼' : '▶' }}
+      </button>
+      <span>{{ pieza.nombre }}</span>
+      <button (click)="toggleEdit(pieza)" title="Editar" class="btn-edit">
+        ✏️
+      </button>
+      <button (click)="borrarPieza(pieza.id)" class="btn-delete" title="Eliminar">
+        🗑️
+      </button>
+    </div>
+
+    <div *ngIf="expandedIds.has(pieza.id!)" class="pieza-details">
+      <form *ngIf="editingPieza?.id === pieza.id && editMode" [formGroup]="piezaForm" (ngSubmit)="onSubmit()">
+        <label>
+          Nombre:
+          <input formControlName="nombre" />
+        </label>
+        <label>
+          Descripción:
+          <input formControlName="descripcion" />
+        </label>
+        <label>
+          Precio:
+          <input type="number" formControlName="precio" />
+        </label>
+        <label>
+          Stock:
+          <input type="number" formControlName="stock" />
+        </label>
+        <label>
+          Proveedor:
+          <input formControlName="proveedor" />
+        </label>
+        <label>
+          Referencia:
+          <input formControlName="referencia" />
+        </label>
+
+        <button type="submit" [disabled]="piezaForm.invalid">Guardar</button>
+        <button type="button" (click)="resetForm()">Cancelar</button>
+      </form>
+
+      <div *ngIf="!(editingPieza?.id === pieza.id && editMode)">
+        <p><strong>Descripción:</strong> {{ pieza.descripcion }}</p>
+        <p><strong>Precio:</strong> {{ pieza.precio | currency }}</p>
+        <p><strong>Stock:</strong> {{ pieza.stock }}</p>
+        <p><strong>Proveedor:</strong> {{ pieza.proveedor }}</p>
+        <p><strong>Referencia:</strong> {{ pieza.referencia }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

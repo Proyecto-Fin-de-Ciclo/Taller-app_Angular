@@ -26,8 +26,8 @@ export class PiezaService {
     return this.http.post<Pieza>(`${this.baseUrl}/CreatePieza`, pieza, this.httpOptions);
   }
 
-  update(pieza: Pieza): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/UpdatePieza/${pieza.id}`, pieza, this.httpOptions);
+  update(pieza: Pieza): Observable<Pieza> {
+    return this.http.put<Pieza>(`${this.baseUrl}/UpdatePieza/${pieza.id}`, pieza, this.httpOptions);
   }
 
   delete(id: number): Observable<void> {

@@ -24,13 +24,15 @@
       <div class="dia" [class.gris]="dia.esDeOtroMes">
         <div class="numero-dia">{{ dia.numero }}</div>
         <div class="citas">
-          <div
-            *ngFor="let cita of getCitasDelDia(dia.numero) | slice:0:6"
-            class="cita-link"
-            style="margin-bottom: 4px;"
-          >
-            {{ cita.user.nombre }} {{ cita.user.apellidos }} - {{ cita.fecha | date: 'HH:mm' }}
-          </div>
+          <ng-container *ngIf="!dia.esDeOtroMes">
+            <div
+              *ngFor="let cita of getCitasDelDia(dia.numero) | slice:0:6"
+              class="cita-link"
+              style="margin-bottom: 4px;"
+            >
+              {{ cita.user.nombre }} {{ cita.user.apellidos }} - {{ cita.fecha | date: 'HH:mm' }}
+            </div>
+          </ng-container>
         </div>
       </div>
     </ng-container>

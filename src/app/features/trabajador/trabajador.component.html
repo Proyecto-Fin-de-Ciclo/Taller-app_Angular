@@ -1,0 +1,48 @@
+<div class="contenedor-principal">
+  <button class="btn-anadir" (click)="abrirFormulario()">Añadir Trabajador</button>
+
+  <div class="lista-trabajadores">
+    <div class="folio-trabajador" *ngFor="let t of trabajadores">
+      <img [src]="t.urlImagen" alt="{{ t.nombreCompleto }}" class="foto-trabajador" />
+
+      <div class="datos-trabajador">
+        <p><strong>Nombre:</strong> {{ t.nombreCompleto }}</p>
+        <p><strong>Código:</strong> {{ t.codigoEmpleado }}</p>
+        <p><strong>Teléfono:</strong> {{ t.telefono }}</p>
+      </div>
+      <div class="botones-folio">
+        <button class="btn-modificar" (click)="abrirFormulario(t)">Modificar</button>
+        <button class="btn-borrar" (click)="borrarTrabajador(t.id)">Borrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarFormulario" class="modal">
+    <div class="modal-content">
+      <h3>{{ trabajadorSeleccionado.id ? 'Modificar Trabajador' : 'Añadir Trabajador' }}</h3>
+      <form (ngSubmit)="guardarTrabajador()">
+        <label>
+          Nombre completo:
+          <input type="text" [(ngModel)]="trabajadorSeleccionado.nombreCompleto" name="nombreCompleto" required />
+        </label>
+        <label>
+          Código empleado:
+          <input type="text" [(ngModel)]="trabajadorSeleccionado.codigoEmpleado" name="codigoEmpleado" required />
+        </label>
+        <label>
+          Imagen:
+          <input type="file" (change)="onFileSelected($event)" />
+        </label>
+        <img *ngIf="imagenPreview" [src]="imagenPreview" class="foto-preview" alt="Vista previa" />
+        <label>
+          Teléfono:
+          <input type="text" [(ngModel)]="trabajadorSeleccionado.telefono" name="telefono" required />
+        </label>
+        <div class="botones-formulario">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
