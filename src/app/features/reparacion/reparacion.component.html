@@ -104,9 +104,16 @@
 
   <button (click)="aplicarFiltroFecha()">Filtrar por Fecha</button>
   <button (click)="cargarTodasLasReparaciones()">Limpiar Filtros</button>
-  <button (click)="abrirFormularioOrden()">Nueva Orden de Trabajo</button>
+ </div>
 
-</div>
+
+
+<div class="filtros-container">
+  <div style="display: flex; justify-content: flex-end; gap: 10px;">
+ <button (click)="abrirFormularioOrden()" style="background-color:green;float: right;">Nueva Orden de Trabajo</button>
+  <button (click)="mostrarFormularioPre()" style="background-color:green;">Nuevo Presupuesto</button>
+  </div>
+  </div>
 
 <!-- Listado de reparaciones -->
 <div class="reparaciones-container">
@@ -118,6 +125,7 @@
     <p><strong>Inicio:</strong> {{ formatFecha(reparacion.horaInicio) }}</p>
     <p><strong>Fin:</strong> {{ reparacion.horaFin ? formatFecha(reparacion.horaFin) : 'En curso' }}</p>
     <p><strong>Estado:</strong> <span [ngClass]="reparacion.estado.toLowerCase()">{{ reparacion.estado }}</span></p>
+
     <div>
       <button
         (click)="actualizarEstado(reparacion)"
@@ -125,7 +133,13 @@
         Avanzar Estado
       </button>
       <button (click)="limpiarEstado(reparacion)" style="margin: 10px;">Reiniciar</button>
-      <button (click)="abrirFormulario(reparacion)">Editar</button>
+      <button (click)="abrirFormulario(reparacion)"style="margin: 10px;">Editar</button>
+      <button
+  *ngIf="reparacion"
+  (click)="abrirFormularioPiezas(reparacion)" >
+  Mostrar/Añadir Piezas
+</button>
+
     </div>
 
 
@@ -164,5 +178,99 @@
     </form>
   </div>
 </div>
+
+<!-- Modal para gestionar piezas -->
+<div *ngIf="mostrarFormularioPiezas" class="modal">
+  <div class="modal-content">
+<h3>Componentes para la reparación</h3>
+
+<div class="piezas-lista">
+  <div *ngFor="let item of piezasAgrupadas" class="pieza-item">
+    <div>
+      <strong>{{ item.pieza.nombre }}</strong> - Cantidad: {{ item.cantidad }}
+    </div>
+    <button class="btn-eliminar" (click)="eliminarPiezaDeReparacion(item.pieza)">Eliminar</button>
+
+  </div>
+</div>
+
+
+    <div class="botones-formulario-piezas">
+      <button class="guardar-btn" (click)="guardarPiezas()">Guardar</button>
+      <button class="cancelar-btn" (click)="cerrarFormularioPiezas()">Cerrar</button>
+    </div>
+
+    <hr />
+
+    <!-- Formulario para añadir nuevas piezas -->
+    <h4>Añadir Piezas</h4>
+    <form (ngSubmit)="agregarPiezaAReparacion()">
+      <label>
+        Selecciona una pieza:
+        <select [(ngModel)]="piezaSeleccionada" name="piezaSeleccionada" required>
+          <option [ngValue]="null" disabled>-- Selecciona una pieza --</option>
+          <option *ngFor="let pieza of piezasDisponibles" [ngValue]="pieza">
+            {{ pieza.nombre }} - {{ pieza.precio | currency }}
+          </option>
+        </select>
+      </label>
+
+      <label>
+        Cantidad:
+        <input
+          type="number"
+          [(ngModel)]="cantidadSeleccionada"
+          name="cantidadSeleccionada"
+          min="1"
+          required
+        />
+      </label>
+
+      <div class="botones-formulario-piezas">
+        <button type="submit" class="guardar-btn">Añadir</button>
+        <button type="button" class="cancelar-btn" (click)="cerrarFormularioPiezas()">Cerrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div *ngIf="mostrarFormularioPresupuesto" class="modal">
+  <div class="modal-content">
+    <h3>Crear Presupuesto</h3>
+    <form (ngSubmit)="crearPresupuesto()">
+      <label for="reparacion">Selecciona Reparación:</label>
+      <select [(ngModel)]="reparacionSeleccionada" name="reparacion" required>
+        <option [ngValue]="null" disabled>-- Selecciona una reparación --</option>
+        <option *ngFor="let rep of reparaciones" [ngValue]="rep">{{ rep.descripcion }}</option>
+      </select>
+
+      <label for="matricula">Matrícula:</label>
+      <input
+        type="text"
+        [(ngModel)]="matricula"
+        name="matricula"
+        required
+        placeholder="Ej: 1234ABC"
+      />
+
+      <label for="descripcionGeneral">Descripción general:</label>
+      <textarea
+        [(ngModel)]="descripcionGeneral"
+        name="descripcionGeneral"
+        rows="3"
+        required
+        placeholder="Breve descripción del presupuesto"
+      ></textarea>
+
+      <div class="botones-formulario">
+        <button type="submit">Crear Presupuesto</button>
+        <button type="button" (click)="cancelarFormulario()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 

@@ -52,7 +52,7 @@ addOrdenDeTrabajo(reparacion: Reparacion, descripcion: string, matricula: string
 }
 
   update(reparacion: Reparacion): Observable<any> {
-    return this.http.put(`${this.apiUrl}/UpdateEstadoReparacion`, reparacion, this.httpOptions);
+    return this.http.put(`${this.apiUrl}/UpdateReparacion`, reparacion, this.httpOptions);
   }
 
   delete(id: number): Observable<any> {

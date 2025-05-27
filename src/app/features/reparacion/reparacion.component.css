@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 1.5rem;
-  align-items: center;
+  align-items: right;
   margin-bottom: 2rem;
   padding: 1rem 1.5rem;
   background: #f0f4ff;
@@ -294,3 +294,89 @@ form select:focus {
 .botones-formulario button[type="button"]:hover {
   background-color: #5a6268;
 }
+
+/* --- Botones del formulario de piezas --- */
+.botones-formulario-piezas {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.botones-formulario-piezas button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Botón Guardar */
+.botones-formulario-piezas .guardar-btn {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.botones-formulario-piezas .guardar-btn:hover {
+  background-color: #0b5ed7;
+}
+
+/* Botón Cancelar */
+.botones-formulario-piezas .cancelar-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.botones-formulario-piezas .cancelar-btn:hover {
+  background-color: #5a6268;
+}
+/* Contenedor para lista de piezas */
+.piezas-lista {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Tarjeta de cada pieza */
+.pieza-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f6fd;
+  border: 1px solid #a9c0f7;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  box-shadow: 0 3px 10px rgba(25, 118, 210, 0.08);
+  font-size: 1rem;
+  color: #1a2e6e;
+}
+
+/* Botón eliminar ya está estilizado como cancelar-btn */
+/* Botón eliminar estilo rojo elegante */
+.btn-eliminar {
+  padding: 0.4rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #b02a37;
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.35);
+}
+
+.btn-eliminar:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+}
+

@@ -11,7 +11,7 @@ export class KeycloakService {
   constructor() {
     this.keycloak = new Keycloak({
       url: 'http://localhost:8080/',
-      realm: 'master',
+      realm: 'Taller-Realm',
       clientId: 'angular-client'
     });
   }
@@ -20,7 +20,7 @@ export class KeycloakService {
   return this.keycloak.init({
     onLoad: 'login-required',
     checkLoginIframe: false,
-    redirectUri: window.location.origin + '/home'
+    redirectUri: window.location.origin + '/'
   }).then(authenticated => {
     return authenticated;
   });

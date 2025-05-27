@@ -9,6 +9,7 @@ import { TrabajadorService } from '../../core/services/trabajador.service';
 import { UserService } from '../../core/services/user.service';
 import { Pieza } from '../../core/models/pieza';
 import { PiezaService } from '../../core/services/pieza.service';
+import { PresupuestoService } from '../../core/services/presupuesto.service';
 
 @Component({
   selector: 'app-reparaciones',
@@ -29,6 +30,14 @@ export class ReparacionesComponent implements OnInit {
 descripcionOrden: string = '';
 matriculaOrden: string = '';
 reparacionSeleccionadaParaOrden!: Reparacion | null;
+mostrarFormularioPiezas: boolean = false;
+piezaSeleccionada: Pieza | null = null;
+cantidadSeleccionada: number = 1;
+reparacion!:Reparacion;
+matricula: string = '';
+  descripcionGeneral: string = '';
+  mostrarFormularioPresupuesto: boolean = false;
+
 
   // Para filtros
   clienteSeleccionadoId: string = '';
@@ -44,14 +53,15 @@ mensajeError: string = '';
     private reparacionService: ReparacionService,
     private trabajadorService: TrabajadorService,
     private userService: UserService,
-    private piezaService: PiezaService
+    private piezaService: PiezaService,
+    private presupuestoService: PresupuestoService,
   ) {}
-
   ngOnInit(): void {
 
     this.cargarTodasLasReparaciones();
     this.cargarTrabajadores();
     this.cargarUsuarios();
+    this.cargarPiezasDisponibles();
   }
 
   crearReparacionVacia(): Reparacion {
@@ -66,7 +76,14 @@ mensajeError: string = '';
   };
 }
 
-
+cargarPiezasDisponibles(): void {
+  this.piezaService.getAll().subscribe({
+    next: (piezas) => {
+      this.piezasDisponibles = piezas;
+    },
+    error: (err) => console.error('Error al cargar piezas:', err)
+  });
+}
 
 
   cargarTodasLasReparaciones(): void {
@@ -187,6 +204,18 @@ mensajeError: string = '';
     this.mostrarFormulario = true;
   }
 
+abrirFormularioPiezas(reparacion?: Reparacion): void {
+  if (!reparacion) {
+    console.error("🚨 Llamada a abrirFormularioPiezas SIN reparación", new Error().stack);
+    return;
+  }
+
+  reparacion.piezas = reparacion.piezas ?? [];
+  this.reparacionSeleccionada = reparacion;
+  this.mostrarFormularioPiezas = true;
+}
+
+
   cerrarFormulario(): void {
     this.mostrarFormulario = false;
   }
@@ -263,5 +292,136 @@ enviarOrdenDeTrabajo() {
       alert('Error al crear orden de trabajo');
     }
   });
+}
+
+
+cerrarFormularioPiezas(): void {
+  this.mostrarFormularioPiezas = false;
+}
+
+// Método para añadir una pieza a la reparación
+agregarPiezaAReparacion(): void {
+  if (this.piezaSeleccionada && this.cantidadSeleccionada > 0) {
+    if (!this.reparacionSeleccionada.piezas) {
+      this.reparacionSeleccionada.piezas = [];
+    }
+    for (let i = 0; i < this.cantidadSeleccionada; i++) {
+      this.reparacionSeleccionada.piezas.push(this.piezaSeleccionada);
+    }
+
+    // Limpiar selección
+    this.piezaSeleccionada = null;
+    this.cantidadSeleccionada = 1;
+  } else {
+    alert('Selecciona una pieza y cantidad válida.');
+  }
+}
+
+// Método para eliminar una pieza de la reparación
+eliminarPiezaDeReparacion(pieza: Pieza): void {
+  this.reparacionSeleccionada.piezas = (this.reparacionSeleccionada.piezas ?? []).filter(
+    (p) => p.id !== pieza.id
+  );
+}
+get piezasAgrupadas() {
+  const mapa = new Map<number, { pieza: Pieza; cantidad: number }>();
+
+  (this.reparacionSeleccionada.piezas ?? []).forEach(pieza => {
+    if (pieza.id == null) return; // si no tiene id, saltar
+    if (mapa.has(pieza.id)) {
+      mapa.get(pieza.id)!.cantidad++;
+    } else {
+      mapa.set(pieza.id, { pieza, cantidad: 1 });
+    }
+  });
+
+  return Array.from(mapa.values());
+}
+guardarPiezas(): void {
+  if (!this.reparacionSeleccionada || !this.reparacionSeleccionada.id) {
+    alert('No hay una reparación seleccionada para guardar.');
+    return;
+  }
+
+  // Preparamos el objeto para enviar, adaptando campos si fuera necesario
+  let reparacionParaBackend: any = { ...this.reparacionSeleccionada };
+
+  // Convertir trabajador y usuario a los DTO que espera el backend
+  reparacionParaBackend.trabajadorDTO = reparacionParaBackend.trabajador;
+  reparacionParaBackend.userDTO = reparacionParaBackend.user;
+
+  // Borramos los campos originales para evitar conflictos en el backend
+  delete reparacionParaBackend.trabajador;
+  delete reparacionParaBackend.user;
+
+  console.log('JSON que se enviará al backend:', JSON.stringify(reparacionParaBackend, null, 2));
+  // Llamamos al servicio para actualizar la reparación con las piezas
+  this.reparacionService.update(reparacionParaBackend).subscribe({
+    next: (updated) => {
+      // Actualizamos la lista local con la reparación actualizada
+      const idx = this.reparaciones.findIndex(r => r.id === updated.id);
+      if (idx >= 0) {
+        this.reparaciones[idx] = updated;
+      }
+      alert('Piezas guardadas correctamente.');
+      this.cerrarFormularioPiezas();
+    },
+    error: (err) => {
+      console.error('Error al guardar piezas:', err);
+      alert('Error guardando piezas.');
+    }
+  });
+}
+
+
+
+crearPresupuesto(): void {
+  if (!this.reparacionSeleccionada) {
+    alert('❌ Debes seleccionar una reparación');
+    return;
+  }
+
+  if (!this.matricula.trim() || !this.descripcionGeneral.trim()) {
+    alert('⚠️ Rellena todos los campos');
+    return;
+  }
+
+
+// Clonamos el objeto reparacionSeleccionada para no modificar el original
+  let presupuestoDTO: any = { ...this.reparacionSeleccionada };
+
+  // Cambiamos el nombre de las propiedades para que coincidan con lo que espera el backend
+  presupuestoDTO.trabajadorDTO = presupuestoDTO.trabajador;
+  presupuestoDTO.userDTO = presupuestoDTO.user;
+
+  // Eliminamos las propiedades originales
+  delete presupuestoDTO.trabajador;
+  delete presupuestoDTO.user;
+
+  // Añadimos los campos específicos para el presupuesto
+const crearPresupuestoRequest = {
+  reparacionDTO: presupuestoDTO,
+  matricula: this.matricula.trim(),
+  descripcion: this.descripcionGeneral
+};
+
+  // Llamamos al servicio para crear el presupuesto
+  this.presupuestoService.crearPresupuesto(crearPresupuestoRequest).subscribe({
+    next: (res) => {
+      alert('Presupuesto creado correctamente');
+      this.mostrarFormularioPresupuesto = false;
+    },
+    error: (err) => {
+      console.error('Error al crear presupuesto:', err);
+      alert('Error al crear presupuesto');
+    }
+  });
+}
+mostrarFormularioPre() {
+  this.mostrarFormularioPresupuesto = true;
+}
+
+cancelarFormulario() {
+  this.mostrarFormularioPresupuesto = false;
 }
 }
