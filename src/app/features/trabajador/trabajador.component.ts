@@ -4,6 +4,7 @@ import { TrabajadorService } from '../../core/services/trabajador.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../../auth/auth-service.service';
 
 @Component({
   selector: 'app-trabajador',
@@ -21,15 +22,27 @@ export class TrabajadorComponent implements OnInit {
     nombreCompleto: '',
     codigoEmpleado: '',
     imagen: '',
-    telefono: ''
+    telefono: '',
+    nombreUsuarioApp: '',
   };
   mostrarFormulario = false;
+  username: string = '';
 
-  constructor(public trabajadorService: TrabajadorService) {}
+  constructor(public trabajadorService: TrabajadorService,private authService: AuthService) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+    this.username = this.authService.getUsername() ?? '';
+
+
+    if (!this.username) {
+      console.error('No se encontró el nombre de usuario');
+      return;
+    }
+
     this.cargarTrabajadores();
-  }
+  }, 500); // este retraso depende de tu red y servidor, por eso es inestable
+}
 
   cargarTrabajadores() {
     this.trabajadorService.getAll().subscribe({
@@ -53,7 +66,8 @@ export class TrabajadorComponent implements OnInit {
         nombreCompleto: '',
         codigoEmpleado: '',
         imagen: '',
-        telefono: ''
+        telefono: '',
+        nombreUsuarioApp: '',
       };
       this.imagenPreview = null;
     }
@@ -77,13 +91,15 @@ export class TrabajadorComponent implements OnInit {
       nombreCompleto: '',
       codigoEmpleado: '',
       imagen: '',
-      telefono: ''
+      telefono: '',
+      nombreUsuarioApp: '',
     };
     this.imagenSeleccionada = null;
     this.imagenPreview = null;
   }
 
   guardarTrabajador() {
+    this.trabajadorSeleccionado.nombreUsuarioApp = this.username;
   const guardarDatos = () => {
     if (this.trabajadorSeleccionado.id && this.trabajadorSeleccionado.id > 0) {
       // Actualizar trabajador

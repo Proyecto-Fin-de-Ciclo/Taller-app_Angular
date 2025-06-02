@@ -1,0 +1,162 @@
+/* --- Contenedor de filtros --- */
+.filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  background: #f0f4ff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(25, 118, 210, 0.12);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.filtros-container label {
+  font-weight: 700;
+  margin-right: 0.5rem;
+  min-width: 160px;
+  color: #144a91;
+  user-select: none;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.filtros-container input[type="text"],
+.filtros-container select {
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid #a9c0f7;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 180px;
+  transition: border-color 0.25s ease;
+  color: #2a3a72;
+  background-color: #ffffff;
+}
+
+.filtros-container input:focus,
+.filtros-container select:focus {
+  border-color: #3565c3;
+  box-shadow: 0 0 8px #3565c388;
+}
+
+/* Botones filtros */
+.filtros-container button {
+  padding: 0.55rem 1.4rem;
+  background-color: #2e5cb8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(46, 92, 184, 0.4);
+  transition: background-color 0.3s ease, transform 0.15s ease;
+}
+
+.filtros-container button:hover {
+  background-color: #244b93;
+  transform: translateY(-2px);
+}
+
+.filtros-container button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(36, 75, 147, 0.4);
+}
+
+/* --- Contenedor de órdenes de trabajo --- */
+.reparaciones-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 15rem;
+  padding: 0 1rem;
+  max-width: 1920px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.reparacion-card {
+  background: linear-gradient(135deg, #fefefe, #d9e4ff);
+  border-radius: 14px;
+  padding: 1.9rem;
+  box-shadow: 0 7px 22px rgba(34, 64, 144, 0.12);
+  border: 1px solid #a3b6f9;
+  transition: box-shadow 0.3s ease, transform 0.25s ease;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+}
+
+.reparacion-card:hover {
+  box-shadow: 0 14px 38px rgba(34, 64, 144, 0.25);
+  transform: translateY(-4px);
+}
+
+.reparacion-card h3 {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.3rem;
+  color: #1a2e6e;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+}
+
+.reparacion-card p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #2f3d75;
+  line-height: 1.4;
+}
+
+.reparacion-card p strong {
+  color: #244b93;
+}
+
+/* --- Estado visual --- */
+.reparacion-card span.pendiente {
+  color: #d97706;
+  font-weight: 700;
+}
+.reparacion-card span.en_proceso {
+  color: #2563eb;
+  font-weight: 700;
+}
+.reparacion-card span.en_cabina {
+  color: #4b5563;
+  font-weight: 700;
+}
+.reparacion-card span.finalizada {
+  color: #ff0303;
+  font-weight: 700;
+}
+.reparacion-card span.cancelada {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* --- Botón Finalizar Orden --- */
+.reparacion-card button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reparacion-card button:hover:not(:disabled) {
+  background-color: #157347;
+}
+
+.reparacion-card button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+

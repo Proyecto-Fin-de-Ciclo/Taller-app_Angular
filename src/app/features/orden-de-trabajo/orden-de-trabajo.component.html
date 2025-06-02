@@ -1,1 +1,55 @@
-<p>orden-de-trabajo works!</p>
+<!-- Filtros -->
+<div class="filtros-container">
+  <label>
+  Filtrar por DNI:
+  <div class="input-icon-wrapper">
+    <i class="fa fa-id-card"></i>
+    <input type="text" [(ngModel)]="filtroDNI" placeholder="Ej: 12345678A" />
+  </div>
+</label>
+
+<label>
+  Filtrar por Matrícula:
+  <div class="input-icon-wrapper">
+    <i class="fa fa-car"></i>
+    <input type="text" [(ngModel)]="filtroMatricula" placeholder="Ej: 1234ABC" />
+  </div>
+</label>
+
+
+  <label>
+    Filtrar por Trabajador:
+    <select [(ngModel)]="filtroTrabajadorId">
+      <option [ngValue]="null">Todos</option>
+      <option *ngFor="let trabajador of trabajadores" [ngValue]="trabajador.id">
+        {{ trabajador.nombreCompleto }}
+      </option>
+    </select>
+  </label>
+
+  <button (click)="aplicarFiltros()">Aplicar Filtros</button>
+  <button (click)="limpiarFiltros()">Limpiar</button>
+</div>
+
+<!-- Línea divisoria -->
+<hr />
+
+<div class="reparaciones-container">
+  <div *ngFor="let orden of ordenesFiltradas" class="reparacion-card">
+    <h3>🧾 {{ orden.descripcionTrabajo }}</h3>
+    <p><strong>Cliente:</strong> {{ orden.user.nombre }} {{ orden.user.apellidos }} ({{ orden.user.dni }})</p>
+    <p><strong>Matrícula:</strong> {{ orden.vehiculo.matricula }}</p>
+    <p><strong>Trabajadores:</strong> {{ getTrabajadoresNombres(orden) }}</p>
+    <p><strong>Piezas:</strong> {{ getPiezasAgrupadas(orden) }}</p>
+    <p><strong>Estado:</strong> {{ orden.estadoOrdenDeTrabajo }}</p>
+    <button class="boton-finalizar" (click)="finalizarOrdenDeTrabajo(orden)">
+  Finalizar orden de trabajo
+</button>
+<button
+  *ngIf="orden.estadoOrdenDeTrabajo === 'EN_PROCESO'"
+  (click)="cambiarEstadoAEnCabina(orden)"
+  class="btn btn-warning">
+  Pasar a Cabina
+</button>
+  </div>
+</div>

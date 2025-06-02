@@ -130,12 +130,13 @@
 
 /* Contenido del modal */
 .modal-content {
-  width: 750px;
+  margin:-125px 0 0 ;
+  width: 790px;
   padding: 24px 32px;
   border-radius: 14px;
   box-shadow: 0 12px 38px rgba(0, 0, 0, 0.18);
   background-color: #fff;
-  max-height: 90vh;
+  max-height: 75vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

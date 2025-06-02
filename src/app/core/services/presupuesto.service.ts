@@ -26,5 +26,27 @@ export class PresupuestoService {
     headers: this.httpOptions.headers
   });
 }
+  getAll(): Observable<Presupuesto[]> {
+    return this.http.get<Presupuesto[]>(`${this.apiUrl}/GetAllPresupuestos`, this.httpOptions);
+  }
+  findAllByAceptadoTrue(): Observable<Presupuesto[]> {
+    return this.http.get<Presupuesto[]>(`${this.apiUrl}/FindAllByAceptadoTrue`, this.httpOptions);
+  }
+
+  getById(id: number): Observable<Presupuesto> {
+    return this.http.get<Presupuesto>(`${this.apiUrl}/GetPresupuestoById/${id}`, this.httpOptions);
+  }
+
+
+
+  update(presupuesto: Presupuesto): Observable<Presupuesto> {
+    return this.http.put<Presupuesto>(`${this.apiUrl}/UpdatePresupuesto`, presupuesto, this.httpOptions);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/DeletePresupuesto/${id}`, this.httpOptions);
+  }
 }
+
+
 

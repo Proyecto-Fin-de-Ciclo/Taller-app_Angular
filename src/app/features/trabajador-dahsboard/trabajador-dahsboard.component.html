@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+  <!-- IZQUIERDA: Órdenes de trabajo -->
+  <div class="ordenes-container">
+    <h2>Órdenes asignadas</h2>
+
+    <div *ngIf="ordenes.length > 0; else noOrdenes">
+      <ul>
+        <li *ngFor="let orden of ordenes">
+          <h4>Orden #{{ orden.id }}</h4>
+          <p><strong>Descripción:</strong> {{ orden.descripcionTrabajo }}</p>
+          <p><strong>Cliente:</strong> {{ orden.user.nombre }}</p>
+          <p><strong>Vehículo:</strong>
+  {{ orden.vehiculo.marca }} {{ orden.vehiculo.modelo }},
+  Matrícula: {{ orden.vehiculo.matricula }},
+  Color: {{ orden.vehiculo.color }},
+  Bastidor: {{ orden.vehiculo.numeroBastidor }}
+</p>
+          <p><strong>estado:</strong> {{ orden.estadoOrdenDeTrabajo }}</p>
+          <p><strong>Piezas:</strong> {{ getNombresPiezas(orden) }}</p>
+           <button (click)="finalizarOrdenDeTrabajo(orden)" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  Finalizar orden
+</button>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <ng-template #noOrdenes>
+      <p>No hay órdenes asignadas.</p>
+    </ng-template>
+  </div>
+
+  <!-- DERECHA: Card del trabajador -->
+  <div class="trabajador-card">
+    <img
+      [src]="getImagenUrl(trabajador?.imagen)"
+      alt="Imagen del trabajador"
+    />
+    <h3>{{ trabajador?.nombreCompleto }}</h3>
+    <p><strong>Código:</strong> {{ trabajador?.codigoEmpleado }}</p>
+    <p><strong>Teléfono:</strong> {{ trabajador?.telefono }}</p>
+    <p><strong>Usuario:</strong> {{ trabajador?.nombreUsuarioApp }}</p>
+  </div>
+</div>

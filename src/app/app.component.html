@@ -1,42 +1,64 @@
-<div class="container">
-  <div class="login-section" *ngIf="isLoggedIn; else notLogged">
-    Bienvenido, {{ username }}
-    <button (click)="logout()" style="margin-left: 15px; background: #3700b3; border:none; padding:6px 12px; border-radius: 5px; color:white; cursor:pointer;">
-      Salir
-    </button>
-  </div>
-  <ng-template #notLogged>
-    <div class="login-section">
-      No estás logueado
+  <div class="container">
+    <div class="login-section" *ngIf="isLoggedIn; else notLogged">
+      Bienvenido, {{ username }}
+      <button (click)="logout()" style="margin-left: 15px; background: #3700b3; border:none; padding:6px 12px; border-radius: 5px; color:white; cursor:pointer;">
+        Salir
+      </button>
     </div>
-  </ng-template>
+    <ng-template #notLogged>
+      <div class="login-section">
+        No estás logueado
+      </div>
+    </ng-template>
 
-  <div class="content" style="background-color: rgba(255, 255, 255, 0.407);">
-    <router-outlet></router-outlet>
+    <div class="content" style="background-color: rgba(255, 255, 255, 0.407);">
+      <router-outlet></router-outlet>
+    </div>
+
+    <nav class="bottom-menu" *ngIf="isLoggedIn">
+      <a *ngIf="hasRole('cliente')" routerLink="/cliente-dashboard" routerLinkActive="active">
+        <span class="icon">👤</span><br>Cliente
+      </a>
+
+      <a *ngIf="hasRole('trabajador')" routerLink="/trabajador-dashboard" routerLinkActive="active">
+        <span class="icon">👷‍♂️</span><br>Portal del empleado
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/cita" routerLinkActive="active">
+        <span class="icon">📅</span><br><p>Cita</p>
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/ordenDeTrabajo" routerLinkActive="active">
+        <span class="icon">📝</span><br><p>Orden De Trabajo</p>
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/presupuesto" routerLinkActive="active">
+        <span class="icon">🧾</span><br><p>Presupuesto</p>
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/compania" routerLinkActive="active">
+        <span class="icon">🏢</span><br>Compañía
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/pieza" routerLinkActive="active">
+        <span class="icon">🔧</span><br>Pieza
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/reparacion" routerLinkActive="active">
+        <span class="icon">🛠️</span><br>Reparación
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/trabajador" routerLinkActive="active">
+        <span class="icon">👷‍♂️</span><br>Trabajador
+      </a>
+
+      <a *ngIf="hasRole('admin')" routerLink="/vehiculo" routerLinkActive="active">
+        <span class="icon">🚗</span><br>Vehículo
+      </a>
+
+
+      <a *ngIf="hasRole('admin')" routerLink="/user" routerLinkActive="active">
+        <span class="icon">👤</span><br>User
+      </a>
+    </nav>
   </div>
-
-
-<nav class="bottom-menu">
-  <a routerLink="/cita" routerLinkActive="active">
-    <span class="icon">📅</span><br><p>Cita</p>
-  </a>
-  <a routerLink="/compania" routerLinkActive="active">
-    <span class="icon">🏢</span><br>Compañía
-  </a>
-  <a routerLink="/pieza" routerLinkActive="active">
-    <span class="icon">🔧</span><br>Pieza
-  </a>
-  <a routerLink="/reparacion" routerLinkActive="active">
-    <span class="icon">🛠️</span><br>Reparación
-  </a>
-  <a routerLink="/trabajador" routerLinkActive="active">
-    <span class="icon">👷‍♂️</span><br>Trabajador
-  </a>
-  <a routerLink="/vehiculo" routerLinkActive="active">
-    <span class="icon">🚗</span><br>Vehículo
-  </a>
-  <a routerLink="/user" routerLinkActive="active">
-    <span class="icon">👤</span><br>User
-  </a>
-</nav>
-</div>

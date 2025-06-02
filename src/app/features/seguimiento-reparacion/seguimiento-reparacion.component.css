@@ -1,0 +1,84 @@
+.contenedor-reparaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 30px;
+}
+
+.reparacion-card-horizontal {
+  background-color: #9ac5fa60;
+  height: 532px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Línea de estados con flechas */
+.linea-estados {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* Imagen del estado */
+.imagen-estado {
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+/* Imagen del estado actual resaltada */
+.imagen-estado.actual {
+  background-color: rgba(89, 162, 91, 0.396);
+  width: 380px;
+  height: 380px;
+  transform: scale(1.1);
+  border: 3px solid #4CAF50;
+  border-radius: 15px;
+}
+
+/* Imagen de estados no actuales */
+.imagen-estado.no-actual {
+  width: 280px;
+  height: 280px;
+  opacity: 0.2;
+}
+
+/* Contenedor de cada estado */
+.estado-individual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Etiqueta del estado */
+.estado-label {
+  font-size: 14px;
+  margin-top: -10px;
+  color: #555;
+  text-align: center;
+  max-width: 100px;
+  font-weight: bold;
+}
+
+/* Flechas de transición */
+.flecha-transicion {
+  font-size: 32px;
+  color: #999;
+}
+
+/* Información debajo */
+.informacion-reparacion {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+
+.informacion-reparacion p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+

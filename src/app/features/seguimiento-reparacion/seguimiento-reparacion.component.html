@@ -1,0 +1,30 @@
+<div class="contenedor-reparaciones">
+  <div *ngFor="let rep of reparaciones" class="reparacion-card-horizontal">
+
+    <div class="linea-estados">
+      <ng-container *ngFor="let estado of todosLosEstados; let i = index">
+        <div class="estado-individual">
+          <img
+            [src]="obtenerImagen(estado)"
+            [ngClass]="{
+              'imagen-estado': true,
+              'actual': esEstadoActual(rep, estado),
+              'no-actual': !esEstadoActual(rep, estado)
+            }"
+            [alt]="estado"
+          />
+          <p class="estado-label">{{ estado.replace('_', ' ') }}</p>
+        </div>
+        <span *ngIf="i < todosLosEstados.length - 1" class="flecha-transicion">➡️</span>
+      </ng-container>
+    </div>
+
+    <div class="informacion-reparacion">
+      <p><strong>Descripción:</strong> {{ rep.descripcion }}</p>
+      <p><strong>Estado actual:</strong> {{ rep.estado.replace('_', ' ') }}</p>
+      <p><strong>Fecha de inicio:</strong> {{ rep.horaInicio | date:'short' }}</p>
+      <p *ngIf="rep.horaFin"><strong>Fecha de fin:</strong> {{ rep.horaFin | date:'short' }}</p>
+    </div>
+
+  </div>
+</div>

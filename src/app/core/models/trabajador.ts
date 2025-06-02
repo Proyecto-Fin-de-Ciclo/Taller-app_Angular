@@ -6,5 +6,6 @@ export interface Trabajador {
   imagen?: string;
   telefono: string;
   urlImagen?: string;
+  nombreUsuarioApp:string;
   // añade más campos si tienes, o los que quieras
 }

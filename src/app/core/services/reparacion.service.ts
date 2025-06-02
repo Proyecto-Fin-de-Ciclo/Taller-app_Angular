@@ -26,11 +26,17 @@ export class ReparacionService {
     return this.http.get<Reparacion>(`${this.apiUrl}/GetReparacionById/${id}`, this.httpOptions);
   }
 
-  getReparacionesPorCliente(clienteId: string): Observable<Reparacion[]> {
+  getReparacionesPorCliente(clienteId: number): Observable<Reparacion[]> {
   return this.http.get<Reparacion[]>(`${this.apiUrl}/GetReparacionesByUserId/${clienteId}`, this.httpOptions);
 }
   getReparacionesPorFecha(inicio: string, fin: string): Observable<Reparacion[]> {
   return this.http.get<Reparacion[]>(`${this.apiUrl}/GetReparacionesByFecha?inicio=${inicio}&fin=${fin}`, this.httpOptions);
+}
+obtenerReparacionActivaConPresupuestoAceptado(vehiculoId: number): Observable<Reparacion> {
+  return this.http.get<Reparacion>(
+    `${this.apiUrl}/reparacion/ObtenerReparacionActivaConPresupuestoAceptado/${vehiculoId}`,
+    this.httpOptions
+  );
 }
 
   add(reparacion: Reparacion): Observable<any> {

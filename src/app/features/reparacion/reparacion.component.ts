@@ -10,6 +10,7 @@ import { UserService } from '../../core/services/user.service';
 import { Pieza } from '../../core/models/pieza';
 import { PiezaService } from '../../core/services/pieza.service';
 import { PresupuestoService } from '../../core/services/presupuesto.service';
+import { Presupuesto } from '../../core/models/presupuesto';
 
 @Component({
   selector: 'app-reparaciones',
@@ -19,6 +20,9 @@ import { PresupuestoService } from '../../core/services/presupuesto.service';
   styleUrls: ['./reparacion.component.css']
 })
 export class ReparacionesComponent implements OnInit {
+  trabajadorSeleccionadoOrden: any = null;
+
+  presupuestoCreado: boolean = false;
   reparaciones: Reparacion[] = [];
   reparacionesOriginales: Reparacion[] = [];
   trabajadores: Trabajador[] = [];
@@ -48,6 +52,7 @@ mensajeError: string = '';
   // Modal y formulario
   mostrarFormulario = false;
   reparacionSeleccionada: Reparacion = this.crearReparacionVacia();
+  presupuestos: Presupuesto[] = [];
 
   constructor(
     private reparacionService: ReparacionService,
@@ -62,6 +67,8 @@ mensajeError: string = '';
     this.cargarTrabajadores();
     this.cargarUsuarios();
     this.cargarPiezasDisponibles();
+    this.obtenerPresupuestosAceptados();
+
   }
 
   crearReparacionVacia(): Reparacion {
@@ -91,7 +98,9 @@ cargarPiezasDisponibles(): void {
       next: (data) => {
         this.reparacionesOriginales = data;
         this.reparaciones = data;
+        this.reparaciones.forEach(r => this.verificarYActualizarEstado(r));
       },
+
       error: (err) => console.error('Error al cargar reparaciones:', err)
     });
   }
@@ -113,7 +122,7 @@ cargarPiezasDisponibles(): void {
   filtrarPorCliente(): void {
     const id = this.clienteSeleccionadoId.trim();
     if (id) {
-      this.reparacionService.getReparacionesPorCliente(id).subscribe({
+      this.reparacionService.getReparacionesPorCliente(Number(id)).subscribe({
         next: (data) => {
           this.reparacionesOriginales = data;
           this.reparaciones = data;
@@ -343,7 +352,7 @@ guardarPiezas(): void {
     return;
   }
 
-  // Preparamos el objeto para enviar, adaptando campos si fuera necesario
+
   let reparacionParaBackend: any = { ...this.reparacionSeleccionada };
 
   // Convertir trabajador y usuario a los DTO que espera el backend
@@ -378,11 +387,18 @@ guardarPiezas(): void {
 crearPresupuesto(): void {
   if (!this.reparacionSeleccionada) {
     alert('❌ Debes seleccionar una reparación');
+
     return;
   }
 
   if (!this.matricula.trim() || !this.descripcionGeneral.trim()) {
     alert('⚠️ Rellena todos los campos');
+    return;
+  }
+
+   // ✅ Validar que hay al menos una pieza
+  if (!this.reparacionSeleccionada.piezas || this.reparacionSeleccionada.piezas.length === 0) {
+    alert('⚠️ No puedes crear un presupuesto sin añadir al menos una pieza');
     return;
   }
 
@@ -424,4 +440,48 @@ mostrarFormularioPre() {
 cancelarFormulario() {
   this.mostrarFormularioPresupuesto = false;
 }
+obtenerPresupuestosAceptados(): void {
+    this.presupuestoService.findAllByAceptadoTrue().subscribe((data: Presupuesto[]) => {
+      this.presupuestos = data;
+
+    });
+
+  }
+
+
+
+esClienteConPresupuestoAceptado(reparacion: any): boolean {
+  const resultado = this.presupuestos.some(p => {
+    const propietario = p.vehiculo?.propietario;
+
+    if (!propietario || !reparacion.user?.dni ) return false;
+
+    return propietario.dni.trim().toLowerCase() === reparacion.user.dni.trim().toLowerCase();
+  });
+
+  console.log(
+    '¿Coincide DNI de',
+    reparacion.user?.dni,
+    '? →',
+    resultado
+  );
+
+  return resultado;
+}
+verificarYActualizarEstado(reparacion: Reparacion): void {
+  const tienePresupuestoAceptado = this.esClienteConPresupuestoAceptado(reparacion);
+
+
+  if (tienePresupuestoAceptado && reparacion.estado === 'PENDIENTE') {
+    this.actualizarEstado(reparacion);
+  }
+
+  console.info("📅 Hora fin:", reparacion.horaFin);
+
+  if (reparacion.estado === 'EN_CABINA' &&reparacion.horaFin && reparacion.horaFin.trim() !== '') {
+
+    this.actualizarEstado(reparacion);
+  }
+}
+
 }

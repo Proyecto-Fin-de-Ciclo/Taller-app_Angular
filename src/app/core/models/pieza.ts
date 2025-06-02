@@ -6,4 +6,5 @@ export interface Pieza {
   stock: number;
   proveedor: string;
   referencia: string;
+  cantidad: number;
 }

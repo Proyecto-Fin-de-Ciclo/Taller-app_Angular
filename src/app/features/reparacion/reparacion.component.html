@@ -117,35 +117,33 @@
 
 <!-- Listado de reparaciones -->
 <div class="reparaciones-container">
-  <div *ngFor="let reparacion of reparaciones" class="reparacion-card">
-    <h3>{{ reparacion.descripcion }}</h3>
-    <p><strong>Cliente:</strong> {{ reparacion.user.nombre }} {{ reparacion.user.apellidos }}</p>
-    <p><strong>Teléfono:</strong> {{ reparacion.user.telefono || 'No disponible' }}</p>
-    <p><strong>Trabajador:</strong> {{ reparacion.trabajador?.nombreCompleto || 'Sin asignar' }}</p>
-    <p><strong>Inicio:</strong> {{ formatFecha(reparacion.horaInicio) }}</p>
-    <p><strong>Fin:</strong> {{ reparacion.horaFin ? formatFecha(reparacion.horaFin) : 'En curso' }}</p>
-    <p><strong>Estado:</strong> <span [ngClass]="reparacion.estado.toLowerCase()">{{ reparacion.estado }}</span></p>
+<ng-container *ngFor="let reparacion of reparaciones">
+  <div
 
-    <div>
-      <button
-        (click)="actualizarEstado(reparacion)"
-        [disabled]="reparacion.estado === 'FINALIZADA' || reparacion.estado === 'CANCELADA'">
-        Avanzar Estado
-      </button>
-      <button (click)="limpiarEstado(reparacion)" style="margin: 10px;">Reiniciar</button>
-      <button (click)="abrirFormulario(reparacion)"style="margin: 10px;">Editar</button>
-      <button
-  *ngIf="reparacion"
-  (click)="abrirFormularioPiezas(reparacion)" >
-  Mostrar/Añadir Piezas
-</button>
+    class="reparacion-card"
+    [ngStyle]="{
+      'background': esClienteConPresupuestoAceptado(reparacion) ? '#d4edda' : 'white'
+    }"
+  >
+        <h3>{{ reparacion.descripcion }}</h3>
+        <p><strong>Cliente:</strong> {{ reparacion.user.nombre }} {{ reparacion.user.apellidos }}</p>
+        <p><strong>Teléfono:</strong> {{ reparacion.user.telefono || 'No disponible' }}</p>
+        <p><strong>Trabajador:</strong> {{ reparacion.trabajador?.nombreCompleto || 'Sin asignar' }}</p>
+        <p><strong>Inicio:</strong> {{ formatFecha(reparacion.horaInicio) }}</p>
+        <p><strong>Fin:</strong> {{ reparacion.horaFin ? formatFecha(reparacion.horaFin) : 'En curso' }}</p>
+        <p><strong>estado Reparacion</strong>
+          {{reparacion.estado }}</p>
+        <div>
+        <button (click)="abrirFormulario(reparacion)"style="margin: 10px;">Editar</button>
+        <button
+    *ngIf="reparacion"
+    (click)="abrirFormularioPiezas(reparacion)" >
+    Mostrar/Añadir Piezas
+  </button>
 
-    </div>
-
-
-
-
+      </div>
   </div>
+</ng-container>
   <button class="reparacion-card" (click)="abrirFormulario()">Nueva Reparación</button>
 </div>
 <div *ngIf="mostrarFormularioOrden" class="modal">
@@ -167,14 +165,33 @@
         Descripción:
         <input type="text" [(ngModel)]="descripcionOrden" name="descripcionOrden" required />
       </label>
+      <label>
+  Trabajador asignado:
+  <select [(ngModel)]="trabajadorSeleccionadoOrden" name="trabajadorOrden" required>
+    <option [ngValue]="null" disabled>-- Selecciona un trabajador --</option>
+    <option *ngFor="let t of trabajadores" [ngValue]="t">{{ t.nombreCompleto }}</option>
+  </select>
+</label>
 
       <label>
         Matrícula del vehículo:
         <input type="text" [(ngModel)]="matriculaOrden" name="matriculaOrden" required />
       </label>
 
-      <button type="submit">Enviar</button>
-      <button type="button" (click)="cerrarFormularioOrden()">Cancelar</button>
+      <div class="botones-formulario">
+  <button
+    type="submit"
+    class="guardar-btn"
+    [disabled]="!esClienteConPresupuestoAceptado(reparacionSeleccionadaParaOrden)"
+  >
+    Enviar
+  </button>
+
+  <button type="button" class="cancelar-btn" (click)="cerrarFormularioOrden()">
+    Cancelar
+  </button>
+</div>
+
     </form>
   </div>
 </div>
@@ -210,7 +227,8 @@
         <select [(ngModel)]="piezaSeleccionada" name="piezaSeleccionada" required>
           <option [ngValue]="null" disabled>-- Selecciona una pieza --</option>
           <option *ngFor="let pieza of piezasDisponibles" [ngValue]="pieza">
-            {{ pieza.nombre }} - {{ pieza.precio | currency }}
+            {{ pieza.nombre }} - {{ pieza.precio | currency:'EUR':'symbol':'1.2-2' }}
+
           </option>
         </select>
       </label>

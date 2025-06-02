@@ -1,3 +1,4 @@
+/* --- Calendario General --- */
 .calendario {
   max-width: 95%;
   margin: auto;
@@ -9,6 +10,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* --- Selector de Fecha --- */
 .selector-fecha {
   display: flex;
   justify-content: center;
@@ -24,6 +26,7 @@
   border: 1px solid #ccc;
 }
 
+/* --- Encabezados de Días --- */
 .dias-semana {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -33,6 +36,7 @@
   color: #333;
 }
 
+/* --- Días del Mes --- */
 .dias-mes {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -45,15 +49,10 @@
   border-radius: 8px;
   padding: 6px;
   height: 100px;
-  width: 180px; /* más ancho */
+  width: 180px;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-.dia.gris {
-  background-color: #f0f0f0;
-  color: #999;
 }
 
 .numero-dia {
@@ -80,4 +79,112 @@
 
 .cita-link:hover {
   text-decoration: underline;
+}
+
+/* --- Estilos Condicionales por Clase --- */
+.dia.gris {
+  background-color: #f0f0f0;
+  color: #999;
+  pointer-events: none;
+}
+
+.dia.fin-de-semana {
+  background-color: rgba(200, 200, 200, 0.3);
+  color: #666;
+  pointer-events: none;
+}
+
+.dia.no-seleccionable {
+  background-color: #ffcccc !important;
+  color: #900;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.dia:hover:not(.gris):not(.fin-de-semana):not(.no-seleccionable) {
+  background-color: #e6f7ff;
+  cursor: pointer;
+}
+
+/* --- Formularios (Añadir Cita & Usuario) en Modal --- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-contenido {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  color: #000;
+}
+
+/* --- Inputs y Botones dentro de Formularios --- */
+.modal-contenido h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.modal-contenido input[type="time"],
+.modal-contenido input[type="text"],
+.modal-contenido input[type="email"],
+.modal-contenido input[type="tel"],
+.modal-contenido input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.modal-contenido button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.modal-contenido button:hover {
+  background-color: #0056b3;
+}
+
+.modal-contenido button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-contenido button[type="button"]:hover {
+  background-color: #aaa;
 }

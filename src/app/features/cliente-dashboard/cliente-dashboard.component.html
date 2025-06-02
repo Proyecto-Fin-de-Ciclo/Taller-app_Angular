@@ -1,0 +1,20 @@
+<!-- Menú de opciones -->
+<div *ngIf="!selectedOption" class="opciones">
+  <button (click)="open('cita')">📅 Añadir una cita</button>
+  <button (click)="open('estado')">🔧 Ver estado de reparación</button>
+  <button (click)="open('presupuesto')">📄 Presupuesto</button>
+</div>
+
+<!-- Pantalla completa del componente seleccionado -->
+<div *ngIf="selectedOption" class="pantalla-completa">
+  <button class="cerrar" (click)="close()">❌ Cerrar</button>
+
+  <ng-container [ngSwitch]="selectedOption">
+    <app-gestion-citas *ngSwitchCase="'cita'"></app-gestion-citas>
+    <app-estado-reparacion-cliente *ngSwitchCase="'estado'"></app-estado-reparacion-cliente>
+
+    <app-presupuesto *ngSwitchCase="'presupuesto'"></app-presupuesto>
+
+  </ng-container>
+</div>
+

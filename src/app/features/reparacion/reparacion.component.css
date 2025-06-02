@@ -379,4 +379,34 @@ form select:focus {
   transform: translateY(1px);
   box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
 }
+.botones-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.guardar-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancelar-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.guardar-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
 

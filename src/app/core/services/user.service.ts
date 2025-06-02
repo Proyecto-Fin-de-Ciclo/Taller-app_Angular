@@ -29,8 +29,8 @@ export class UserService {
   return this.http.get<User>(`${this.baseUrl}/GetUserByDni/${dni}`, this.httpOptions);
 }
 
-  create(user: User): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/CreateUser`, user, this.httpOptions);
+  create(user: User): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/CreateUser`, user, this.httpOptions);
   }
 
   update(user: User): Observable<string> {

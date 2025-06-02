@@ -3,12 +3,12 @@ import { Vehiculo } from './vehiculo';
 import { User } from './user';
 import { Trabajador } from './trabajador';
 
-export interface OrdenDeTrabajoDTO {
+export interface OrdenDeTrabajo {
   id?: number;
   trabajadores: Trabajador[];
-  vehiculoDTO: Vehiculo;
+  vehiculo: Vehiculo;
   descripcionTrabajo: string;
- estado:string;
+  estadoOrdenDeTrabajo:string;
   piezas: Pieza[];
   user: User;
 }

@@ -1,1 +1,20 @@
-<p>presupuesto works!</p>
+<div class="filtros">
+  <input [(ngModel)]="dniFiltro" (input)="filtrar()" placeholder="Filtrar por DNI">
+  <input [(ngModel)]="matriculaFiltro" (input)="filtrar()" placeholder="Filtrar por Matrícula">
+</div>
+
+<div class="presupuesto-container">
+  <div class="card" *ngFor="let p of filteredPresupuestos">
+    <h3>{{ p.nombreTaller }}</h3>
+    <p><strong>Cliente:</strong> {{ p.vehiculo.propietario.nombre }} {{ p.vehiculo.propietario.apellidos }}</p>
+    <p><strong>DNI:</strong> {{ p.vehiculo.propietario.dni }}</p>
+    <p><strong>Matrícula:</strong> {{ p.vehiculo.matricula }}</p>
+    <p><strong>Trabajo:</strong> {{ p.descripcionTrabajo }}</p>
+    <p><strong>Subtotal:</strong> {{ p.subtotalPiezas }} €</p>
+    <p><strong>Total con IVA:</strong> {{ p.totalConIVA }} €</p>
+    <p><strong>Aceptado:</strong> <span [ngClass]="{ 'aprobado': p.aceptado, 'pendiente': !p.aceptado }">{{ p.aceptado ? 'Sí' : 'No' }}</span></p>
+
+    <button (click)="aprobarPresupuesto(p)" [disabled]="p.aceptado">Aprobar presupuesto</button>
+    <button (click)="generarPDF(p)">Generar PDF</button>
+  </div>
+</div>

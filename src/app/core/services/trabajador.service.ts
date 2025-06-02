@@ -24,6 +24,13 @@ export class TrabajadorService {
   getById(id: number): Observable<Trabajador> {
     return this.http.get<Trabajador>(`${this.baseUrl}/GetTrabajadorById/${id}`, this.httpOptions);
   }
+  getByNombreUsuarioApp(nombreUsuarioApp: string): Observable<Trabajador> {
+  return this.http.get<Trabajador>(
+    `${this.baseUrl}/GetTrabajadorByNombreUsuarioApp/${nombreUsuarioApp}`,
+    this.httpOptions
+  );
+}
+
 
   getImagen(nombreArchivo: string): string {
   return `http://localhost:3307/imagen/${nombreArchivo}`;
